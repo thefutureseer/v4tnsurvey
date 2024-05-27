@@ -1,8 +1,12 @@
+'use client';
 // Import the Metadata type from Next.js for defining page metadata.
 import type { Metadata } from "next";
 
 // Import the Inter font from Google Fonts through Next.js.
 import { Inter } from "next/font/google";
+
+//Import ErrorBoundary.tsx
+import ErrorBoundary from "@/app/components/ErrorBoundary";
 
 // Import global CSS styles.
 import "./globals.css";
@@ -13,8 +17,10 @@ import Navbar from "@/app/components/Navbar";
 // Load the Inter font with the Latin subset.
 const inter = Inter({ subsets: ["latin"] });
 
+//Not exported and used here because this is a 'use client' side file
+// but can be used at another time:
 // Define the metadata for the application, including title, description, and Open Graph metadata.
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "Dan Surveys", // Title of the application.
   description: "Survey everything", // Description of the application.
   openGraph: { // Open Graph metadata for better SEO and social media integration.
@@ -22,14 +28,14 @@ export const metadata: Metadata = {
     description: 'Survey everything', // Description for social media cards.
     type: 'website', // Type of content.
     url: 'https://survey-next-v-3.vercel.app/', // URL of the website.
-    // images: [ // Images for social media cards.
-    //   {
-    //     url: 'https://your-website-url.com/og-image.jpg', // URL of the image.
-    //     width: 800, // Width of the image.
-    //     height: 600, // Height of the image.
-    //     alt: 'Og Image Alt', // Alt text for the image.
-    //   },
-    // ],
+    images: [ // Images for social media cards.
+      {
+        url: 'https://www.qualtrics.com/m/assets/marketplace/wp-content/uploads/2020/03/Website-Satisfaction-Wide.png', // URL of the image.
+        width: 800, // Width of the image.
+        height: 600, // Height of the image.
+        alt: 'Thumb Image', // Alt text for the image.
+      },
+    ],
   },
 };
 
@@ -40,6 +46,7 @@ export default function RootLayout({
   children: React.ReactNode; // Type definition for children.
 }>) {
   return (
+   <ErrorBoundary>{/*Wrap all content with Error Boundary bounty*/}
     <html lang="en"> {/* Set the language attribute for the HTML document. */}
       <head> {/* Head section for meta tags and links. */}
         <link rel="icon" href="/favicon.ico" /> {/* Link to the favicon. */}
@@ -50,5 +57,6 @@ export default function RootLayout({
         {children} {/* Render the children components inside the body. */}
       </body>
     </html>
+    </ErrorBoundary> 
   );
 };
